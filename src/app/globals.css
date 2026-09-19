@@ -1,0 +1,272 @@
+@import "tailwindcss";
+
+/* Theme is a class on <html> (set before paint by the script in layout.tsx). */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+ * FutureWallet Pop.
+ * Warm paper, ink borders with hard (no blur) offset shadows, volt-lime actions,
+ * electric blue for "now" and hot pink only for "future". Chart colours were run
+ * through the dataviz palette validator in both modes.
+ */
+:root {
+  --background: #f7f3ea;
+  --surface-container-lowest: #ffffff;
+  --surface-container-low: #f0eadc;
+  --surface-container: #e8e1d0;
+  --surface-container-high: #ddd5c1;
+
+  --on-surface: #15130f;
+  --on-surface-variant: #4a463d;
+  --secondary: #6b665a;
+  --outline: #a39d8e;
+  --outline-variant: #ddd6c6;
+
+  /* Ink: borders and hard shadows on "pop" elements. */
+  --pop-border: #15130f;
+  --pop-shadow: rgba(21, 19, 15, 1);
+
+  --primary: #c8f03c;
+  --primary-dim: #b7df2b;
+  --on-primary: #15130f;
+
+  --now: #3a5bff;
+  --future: #ff3d8b;
+  /* Text-safe pink (the fill pink is too light for small text). */
+  --tertiary: #d6106a;
+  --tertiary-container: #ffe6f1;
+
+  --error: #c8202a;
+  --error-container: #fde8e8;
+  --warning: #a85a00;
+  --warning-container: #fff1d6;
+  --success: #0f8a45;
+  --success-container: #e2f5e9;
+
+  --chart-1: #2a78d6;
+  --chart-2: #1baf7a;
+  --chart-3: #eda100;
+  --chart-4: #e87ba4;
+  --chart-5: #4a3aa7;
+  --chart-other: #a39d8e;
+  --chart-current: #3a5bff;
+  --chart-future: #ff3d8b;
+  --chart-grid: #e4ddcc;
+}
+
+:root.dark {
+  --background: #12110e;
+  --surface-container-lowest: #1b1915;
+  --surface-container-low: #23201b;
+  --surface-container: #2c2922;
+  --surface-container-high: #37332b;
+
+  --on-surface: #f2ede0;
+  --on-surface-variant: #b8b2a2;
+  --secondary: #a29c8c;
+  --outline: #6e695c;
+  --outline-variant: #3a362e;
+
+  --pop-border: #f2ede0;
+  --pop-shadow: rgba(242, 237, 224, 0.3);
+
+  --primary: #c8f03c;
+  --primary-dim: #d6f766;
+  --on-primary: #15130f;
+
+  --now: #5b7bff;
+  --future: #f2508f;
+  --tertiary: #ff7aae;
+  --tertiary-container: #2e1622;
+
+  --error: #ff6b6b;
+  --error-container: #2b1416;
+  --warning: #ffb020;
+  --warning-container: #2a2110;
+  --success: #4ade80;
+  --success-container: #10261a;
+
+  --chart-1: #3987e5;
+  --chart-2: #199e70;
+  --chart-3: #c98500;
+  --chart-4: #d55181;
+  --chart-5: #9085e9;
+  --chart-other: #6e695c;
+  --chart-current: #5b7bff;
+  --chart-future: #f2508f;
+  --chart-grid: #2c2922;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface-container-lowest: var(--surface-container-lowest);
+  --color-surface-container-low: var(--surface-container-low);
+  --color-surface-container: var(--surface-container);
+  --color-surface-container-high: var(--surface-container-high);
+  --color-on-surface: var(--on-surface);
+  --color-on-surface-variant: var(--on-surface-variant);
+  --color-secondary: var(--secondary);
+  --color-outline: var(--outline);
+  --color-outline-variant: var(--outline-variant);
+  --color-ink: var(--pop-border);
+  --color-primary: var(--primary);
+  --color-primary-dim: var(--primary-dim);
+  --color-on-primary: var(--on-primary);
+  --color-now: var(--now);
+  --color-future: var(--future);
+  --color-tertiary: var(--tertiary);
+  --color-tertiary-container: var(--tertiary-container);
+  --color-error: var(--error);
+  --color-error-container: var(--error-container);
+  --color-warning: var(--warning);
+  --color-warning-container: var(--warning-container);
+  --color-success: var(--success);
+  --color-success-container: var(--success-container);
+
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+
+  --font-headline: var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-label: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+}
+
+/* --text-scale is set from Settings > Text size (1, 1.12 or 1.25). */
+html {
+  font-size: calc(17px * var(--text-scale, 1));
+}
+@media (min-width: 1280px) {
+  html {
+    font-size: calc(18.5px * var(--text-scale, 1));
+  }
+}
+
+body {
+  line-height: 1.55;
+  background: var(--background);
+  color: var(--on-surface);
+  font-family: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Figures that line up in columns. Large stand-alone numbers stay proportional. */
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+@layer components {
+  /* A hero card: ink border and a hard offset shadow. */
+  .pop-card {
+    border: 2px solid var(--pop-border);
+    box-shadow: 4px 4px 0 var(--pop-shadow);
+  }
+
+  /* Small label stuck on a number, tilted like a sticker. */
+  .sticker {
+    display: inline-flex;
+    align-items: center;
+    border: 1.5px solid var(--pop-border);
+    border-radius: 0.5rem;
+    padding: 0.125rem 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    transform: rotate(-2deg);
+    transition: transform 150ms ease;
+  }
+  .sticker:hover {
+    transform: rotate(1deg) scale(1.06);
+  }
+
+  .btn {
+    display: inline-flex;
+    height: 2.75rem;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 0.75rem;
+    border: 2px solid var(--pop-border);
+    padding: 0 1rem;
+    font-family: var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;
+    font-size: 0.875rem;
+    font-weight: 700;
+    line-height: 1;
+    cursor: pointer;
+    transition:
+      transform 80ms ease,
+      box-shadow 80ms ease,
+      background-color 120ms ease;
+  }
+  .btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+  }
+  .btn-primary {
+    background: var(--primary);
+    color: var(--on-primary);
+    box-shadow: 3px 3px 0 var(--pop-shadow);
+  }
+  .btn-outline {
+    background: var(--surface-container-lowest);
+    color: var(--on-surface);
+    box-shadow: 3px 3px 0 var(--pop-shadow);
+  }
+  .btn-primary:hover:not(:disabled),
+  .btn-outline:hover:not(:disabled) {
+    transform: translate(-1px, -1px);
+    box-shadow: 4px 4px 0 var(--pop-shadow);
+  }
+  .btn-primary:active:not(:disabled),
+  .btn-outline:active:not(:disabled) {
+    transform: translate(2px, 2px);
+    box-shadow: 1px 1px 0 var(--pop-shadow);
+  }
+  .btn-text {
+    height: auto;
+    border: 0;
+    padding: 0;
+    background: none;
+    color: var(--on-surface);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 0.5rem;
+  border-radius: 999px;
+  border: 2px solid var(--pop-border);
+  background: var(--surface-container);
+  cursor: pointer;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 1.5rem;
+  width: 1.5rem;
+  border-radius: 999px;
+  border: 2px solid var(--pop-border);
+  background: var(--primary);
+  box-shadow: 2px 2px 0 var(--pop-shadow);
+}
+input[type="range"]::-moz-range-thumb {
+  height: 1.25rem;
+  width: 1.25rem;
+  border-radius: 999px;
+  border: 2px solid var(--pop-border);
+  background: var(--primary);
+  box-shadow: 2px 2px 0 var(--pop-shadow);
+}
+
+:focus-visible {
+  outline: 3px solid var(--now);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
